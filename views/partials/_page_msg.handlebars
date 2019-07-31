@@ -1,0 +1,17 @@
+{{#if page_success_msg}}
+<div class="col-md-10 mx-auto text-center dialog">
+  <p class="alert alert-success">
+    <span class="close" data-dismiss="alert">&times;</span>
+    {{page_success_msg}}
+  </p>
+</div>
+{{/if}}
+
+{{#if page_error_msg}}
+<div class="col-md-10 mx-auto text-center dialog">
+  <p class="alert alert-danger">
+    <span class="close" data-dismiss="alert">&times;</span>
+    {{page_error_msg}}
+  </p>
+</div>
+{{/if}}
