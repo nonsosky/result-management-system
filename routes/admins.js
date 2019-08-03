@@ -405,11 +405,16 @@ router.post('/computeresult/', (req, res) => {
 
             
             var resultSheetModel;
+
+            console.log(regNo);
+            console.log(resultCollectionNames);
             
             for(let i = 0; i < regNo.length; i++){
               for(let j = 0; j < resultCollectionNames.length;j++){
                 resultSheetModel = buildResultSchema(resultCollectionNames[j].tableName);
                 let currentCourseCode = resultCollectionNames[j].courseCode;
+
+
                 
                 //--------------------------------Review
                 resultSheetModel.findOne({REG_NO: regNo[i]})

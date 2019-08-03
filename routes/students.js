@@ -302,19 +302,23 @@ router.put('/', ensureAuthenticated, (req, res) => {
 router.post('/resultchecker', ensureAuthenticated, (req, res) => {
   let academicYear = `${req.body.year1}_${req.body.year2}`
   let collectionName = `${req.body.level}_${academicYear}_${req.body.session}`;
-  let regNo = req.body.regNo;
+  let regNo = req.user.regNo;
 
   CompositeSheetLog.findOne({compositeSheetTableName: collectionName})
     .then(log => {
       if(log){
         const CompositeSheetModel = buildModel(log.schemaDoc, log.compositeSheetTableName);
+        // console.log(CompositeSheetModel);
 
-        CompositeSheetModel.findOne({regNo: regNo})
+        CompositeSheetModel.find({regNo:regNo})
           .then(result => {
-            if(result){
+            console.log(result);
+            if(result.length > 0){
+              result = result[0];
               
               let resultData = [];
               let columnHeading = Object.getOwnPropertyNames(result._doc);
+              console.log(columnHeading);
               for(const heading of columnHeading){
                 switch(heading){
                   case '__v':
@@ -331,6 +335,10 @@ router.post('/resultchecker', ensureAuthenticated, (req, res) => {
                 resultData
               });
               
+            } else {
+              res.render('student/checkedresult', {
+                resultData: []
+              });
             }
           })
       }else{
